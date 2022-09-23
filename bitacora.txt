@@ -12,3 +12,8 @@ El carro Algo fue reparado con exito: en: Fri Sep 23 17:07:00 CST 2022
 El carro Algo fue reparado con exito: en: Fri Sep 23 17:07:47 CST 2022
 El carro Algo fue reparado con exito: en: Fri Sep 23 17:08:54 CST 2022
 El carro Algo fue reparado con exito: en: Fri Sep 23 17:11:43 CST 2022
+El carro Algo fue reparado con exito: en: Fri Sep 23 17:13:40 CST 2022
+El carro Algo fue reparado con exito: en: Fri Sep 23 17:16:48 CST 2022
+El carro algo tambien fue reparado con exito: en: Fri Sep 23 17:17:40 CST 2022
+El carro algo tambien fue reparado con exito: en: Fri Sep 23 17:18:00 CST 2022
+El carro Algo fue reparado con exito: en: Fri Sep 23 17:22:02 CST 2022

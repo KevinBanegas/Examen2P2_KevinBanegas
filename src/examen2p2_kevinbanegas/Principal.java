@@ -5,15 +5,20 @@
  */
 package examen2p2_kevinbanegas;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -99,6 +104,12 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
 
         crud_empleados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -310,6 +321,11 @@ public class Principal extends javax.swing.JFrame {
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("jLabel10");
@@ -412,14 +428,14 @@ public class Principal extends javax.swing.JFrame {
         e.setCarrosRep(Integer.parseInt(id.getText()));
         e.setEdad(Integer.parseInt(edadEmpleado.getValue().toString()));
         e.setNombre(nomEmpleado.getText());
-        
+
         empleados.add(e);
-        
+
         System.out.println(empleados);
         ponerEmpleados();
         cargarBinEmpleados();
         cbEmpleados();
-        
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -438,21 +454,21 @@ public class Principal extends javax.swing.JFrame {
         c.setEstado("En espera de entrar a reparación");
         c.setMarca(marcaCarro.getText());
         c.setModelo(modeloCarro.getText());
-        
+
         carros.add(c);
         ponerCarros();
         cargarBinCarros();
         tablaCarros();
         cbModCarros();
         System.out.println(carros);
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
-        marcaMod.setText(((Carro)jComboBox4.getSelectedItem()).getMarca());
-        modeloMod.setText(((Carro)jComboBox4.getSelectedItem()).getModelo());
-        añoMod.setText(""+((Carro)jComboBox4.getSelectedItem()).getAño());
-        costoMod.setValue(((Carro)jComboBox4.getSelectedItem()).getCosto());
+        marcaMod.setText(((Carro) jComboBox4.getSelectedItem()).getMarca());
+        modeloMod.setText(((Carro) jComboBox4.getSelectedItem()).getModelo());
+        añoMod.setText("" + ((Carro) jComboBox4.getSelectedItem()).getAño());
+        costoMod.setValue(((Carro) jComboBox4.getSelectedItem()).getCosto());
     }//GEN-LAST:event_jComboBox4ItemStateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -462,13 +478,52 @@ public class Principal extends javax.swing.JFrame {
         c.setCosto(Integer.parseInt(costoMod.getValue().toString()));
         c.setMarca(marcaMod.getText());
         c.setModelo(modeloMod.getText());
-        
+
+        DefaultComboBoxModel cbM = (DefaultComboBoxModel) jComboBox4.getModel();
+        cbM.removeAllElements();
+        for (Carro carro : carros) {
+            cbM.addElement(carro);
+        }
+        jComboBox4.setModel(cbM);
         ponerCarros();
         cargarBinCarros();
-        cbModCarros();
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
-    
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        //cbModCarros();
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        Carro c = ((Carro) jComboBox3.getSelectedItem());
+        Empleado e = ((Empleado) jComboBox2.getSelectedItem());
+
+        int costo = c.getCosto();
+        int porcen = e.getPorcentaje();
+
+        Random r = new Random(100);
+        int random = 0 + r.nextInt(100);
+        String exito;
+        if (porcen < random) {
+            exito = "fue reparado con exito:";
+            c.setEstado("En espera de pago de reparación");
+        } else {
+            exito = "no fue reparado con exito:";
+            c.setEstado("En reparación");
+        }
+        bitacora(c, e, exito);
+        ponerCarros();
+        cargarBinCarros();
+        System.out.println(c.getEstado());
+        Hilo h = new Hilo(costo, jProgressBar1, jLabel10,c);
+        h.start();
+        if(jProgressBar1.getValue()==costo/1000){
+            jLabel10.setText("El carro esta " +c.getEstado());
+        }
+
+        
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     public void cargarBinEmpleados() {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -488,10 +543,10 @@ public class Principal extends javax.swing.JFrame {
             ois.close();
             fis.close();
         } catch (Exception e) {
-            
+
         }
     }
-    
+
     public void cargarBinCarros() {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -511,9 +566,9 @@ public class Principal extends javax.swing.JFrame {
             fis.close();
         } catch (Exception e) {
         }
-        
+
     }
-    
+
     public void ponerCarros() {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
@@ -533,7 +588,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-    
+
     public void ponerEmpleados() {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
@@ -552,9 +607,9 @@ public class Principal extends javax.swing.JFrame {
             fos.close();
         } catch (Exception e) {
         }
-        
+
     }
-    
+
     public void tablaCarros() {
         DefaultTableModel tableM = (DefaultTableModel) jTable1.getModel();
         tableM.setNumRows(0);
@@ -568,7 +623,7 @@ public class Principal extends javax.swing.JFrame {
         }
         jTable1.setModel(tableM);
     }
-    
+
     public void cbEmpleados() {
         DefaultComboBoxModel cbM = (DefaultComboBoxModel) jComboBox1.getModel();
         cbM.removeAllElements();
@@ -578,7 +633,7 @@ public class Principal extends javax.swing.JFrame {
         jComboBox1.setModel(cbM);
         jComboBox2.setModel(cbM);
     }
-    
+
     public void cbModCarros() {
         DefaultComboBoxModel cbM = (DefaultComboBoxModel) jComboBox4.getModel();
         cbM.removeAllElements();
@@ -587,6 +642,20 @@ public class Principal extends javax.swing.JFrame {
         }
         jComboBox4.setModel(cbM);
         jComboBox3.setModel(cbM);
+    }
+
+    public void bitacora(Carro c, Empleado em, String exito) {
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            fw = new FileWriter(bitac, true);
+            bw = new BufferedWriter(fw);
+            
+            bw.write("El carro " + c.getModelo()+ " " + exito + " en: " +new Date()+ "\n");
+            bw.flush();
+        }catch(Exception e){
+            
+        }
     }
 
     /**
@@ -627,6 +696,7 @@ public class Principal extends javax.swing.JFrame {
     private ArrayList<Carro> carros = new ArrayList();
     private File emp = new File("./empleados.kev");
     private File carr = new File("./carros.kev");
+    private File bitac = new File("./bitacora.txt");
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField añoMod;
     private javax.swing.JTextField añofab;

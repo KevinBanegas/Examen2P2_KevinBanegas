@@ -8,6 +8,7 @@ public class Empleado implements Serializable{
     private int edad;
     private int id;
     private int carrosRep;
+    private int porcentaje;
     //private 
     
     private static final long SerialVersionUID = 111L;
@@ -17,6 +18,16 @@ public class Empleado implements Serializable{
         this.edad = edad;
         this.id = id;
         this.carrosRep = carrosRep;
+        if(carrosRep<=5){
+            porcentaje = 30;
+        }else if(carrosRep<=15 && carrosRep>=6){
+            porcentaje = 22;
+        }else if(carrosRep>=16 && carrosRep<30){
+            porcentaje = 13;
+        }else if(carrosRep>=30){
+            porcentaje = 7;
+        }
+        porcentaje = carrosRep;
     }
 
     public Empleado() {
@@ -54,6 +65,15 @@ public class Empleado implements Serializable{
         this.carrosRep = carrosRep;
     }
 
+    public int getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(int porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    
     @Override
     public String toString() {
         return nombre;

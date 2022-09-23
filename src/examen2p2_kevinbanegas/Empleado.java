@@ -8,6 +8,7 @@ public class Empleado implements Serializable{
     private int edad;
     private int id;
     private int carrosRep;
+    //private 
     
     private static final long SerialVersionUID = 111L;
 

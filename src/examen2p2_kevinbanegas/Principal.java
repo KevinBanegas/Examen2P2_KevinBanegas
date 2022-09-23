@@ -149,7 +149,7 @@ public class Principal extends javax.swing.JFrame {
         crud_carros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Carros");
-        crud_carros.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
+        crud_carros.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
 
         jLabel8.setText("Marca");
         crud_carros.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
@@ -426,6 +426,9 @@ public class Principal extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int indexEmp = jComboBox1.getSelectedIndex();
         empleados.remove(indexEmp);
+        ponerEmpleados();
+        cargarBinEmpleados();
+        cbEmpleados();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -472,6 +475,7 @@ public class Principal extends javax.swing.JFrame {
         Empleado temp;
         emp = new File("./empleados.kev");
         try {
+            empleados = new ArrayList();
             fis = new FileInputStream(emp);
             ois = new ObjectInputStream(fis);
             while ((temp = (Empleado) ois.readObject()) != null) {
@@ -520,7 +524,6 @@ public class Principal extends javax.swing.JFrame {
             for (Carro carro : carros) {
                 oos.writeObject(carro);
             }
-            
             oos.flush();
         } catch (Exception e) {
         }
@@ -536,7 +539,6 @@ public class Principal extends javax.swing.JFrame {
         ObjectOutputStream oos = null;
         emp = new File("./empleados.kev");
         try {
-            empleados = new ArrayList();
             fos = new FileOutputStream(emp);
             oos = new ObjectOutputStream(fos);
             for (Empleado empleado : empleados) {
@@ -574,6 +576,7 @@ public class Principal extends javax.swing.JFrame {
             cbM.addElement(empleado);
         }
         jComboBox1.setModel(cbM);
+        jComboBox2.setModel(cbM);
     }
     
     public void cbModCarros() {
@@ -583,6 +586,7 @@ public class Principal extends javax.swing.JFrame {
             cbM.addElement(carro);
         }
         jComboBox4.setModel(cbM);
+        jComboBox3.setModel(cbM);
     }
 
     /**

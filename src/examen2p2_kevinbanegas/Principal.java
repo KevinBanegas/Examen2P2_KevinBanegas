@@ -5,6 +5,13 @@
  */
 package examen2p2_kevinbanegas;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 /**
  *
  * @author Usuario
@@ -16,6 +23,8 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        cargarBinEmpleados();
+        System.out.println(empleados);
     }
 
     /**
@@ -27,21 +36,366 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        crud_empleados = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        nomEmpleado = new javax.swing.JTextField();
+        id = new javax.swing.JTextField();
+        carrosRep = new javax.swing.JTextField();
+        edadEmpleado = new javax.swing.JSpinner();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        crud_carros = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jSpinner2 = new javax.swing.JSpinner();
+        simulacion = new javax.swing.JPanel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jLabel10 = new javax.swing.JLabel();
+        pagos = new javax.swing.JPanel();
+        entregas = new javax.swing.JPanel();
+        reparaciones = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        crud_empleados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("Nombre");
+        crud_empleados.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 126, -1, -1));
+
+        jLabel2.setText("Edad");
+        crud_empleados.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 270, -1, -1));
+
+        jLabel3.setText("Numero de Identidad");
+        crud_empleados.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 270, -1, -1));
+
+        jLabel4.setText("Carros Reparados");
+        crud_empleados.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 126, -1, -1));
+        crud_empleados.add(nomEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 147, 98, -1));
+        crud_empleados.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 291, 98, -1));
+        crud_empleados.add(carrosRep, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 147, 89, -1));
+        crud_empleados.add(edadEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 291, 98, -1));
+
+        crud_empleados.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 146, -1));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Eliminar Empleados");
+        crud_empleados.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 130, 146, -1));
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Empleados");
+        crud_empleados.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 100, -1));
+
+        jButton1.setText("Crear Emplelado");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        crud_empleados.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 377, -1, 50));
+
+        jButton2.setText("Eliminar Empleado");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        crud_empleados.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 290, 150, 40));
+
+        jTabbedPane1.addTab("Empleados", crud_empleados);
+
+        crud_carros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setText("jLabel7");
+        crud_carros.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
+
+        jLabel8.setText("Marca");
+        crud_carros.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
+
+        jLabel9.setText("Año Fabricacion");
+        crud_carros.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, -1));
+
+        jLabel13.setText("Modelo");
+        crud_carros.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, -1, -1));
+
+        jLabel15.setText("Costo");
+        crud_carros.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, -1, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Marca", "Modelo", "Estado de Reparacion", "Costo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        crud_carros.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 570, 270));
+
+        jTextField2.setText("jTextField2");
+        crud_carros.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 100, -1));
+
+        jTextField5.setText("jTextField5");
+        crud_carros.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 110, -1));
+
+        jTextField6.setText("jTextField6");
+        crud_carros.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 120, -1));
+        crud_carros.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 70, -1));
+
+        jTabbedPane1.addTab("Carros", crud_carros);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jToggleButton1.setText("jToggleButton1");
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("jLabel10");
+
+        javax.swing.GroupLayout simulacionLayout = new javax.swing.GroupLayout(simulacion);
+        simulacion.setLayout(simulacionLayout);
+        simulacionLayout.setHorizontalGroup(
+            simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, simulacionLayout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, simulacionLayout.createSequentialGroup()
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(130, 130, 130)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(simulacionLayout.createSequentialGroup()
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(43, 43, 43))
+        );
+        simulacionLayout.setVerticalGroup(
+            simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(simulacionLayout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(136, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Simulación", simulacion);
+
+        javax.swing.GroupLayout pagosLayout = new javax.swing.GroupLayout(pagos);
+        pagos.setLayout(pagosLayout);
+        pagosLayout.setHorizontalGroup(
+            pagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 735, Short.MAX_VALUE)
+        );
+        pagosLayout.setVerticalGroup(
+            pagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 513, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Pagos", pagos);
+
+        javax.swing.GroupLayout entregasLayout = new javax.swing.GroupLayout(entregas);
+        entregas.setLayout(entregasLayout);
+        entregasLayout.setHorizontalGroup(
+            entregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 735, Short.MAX_VALUE)
+        );
+        entregasLayout.setVerticalGroup(
+            entregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 513, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Entregas", entregas);
+
+        javax.swing.GroupLayout reparacionesLayout = new javax.swing.GroupLayout(reparaciones);
+        reparaciones.setLayout(reparacionesLayout);
+        reparacionesLayout.setHorizontalGroup(
+            reparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 735, Short.MAX_VALUE)
+        );
+        reparacionesLayout.setVerticalGroup(
+            reparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 513, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Reparaciones", reparaciones);
+
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Empleado e = new Empleado();
+        e.setCarrosExito(Integer.parseInt(carrosRep.getText()));
+        e.setCarrosRep(Integer.parseInt(id.getText()));
+        e.setEdad(Integer.parseInt(edadEmpleado.getValue().toString()));
+        e.setNombre(nomEmpleado.getText());
+
+        empleados.add(e);
+
+        ponerEmpleados();
+        cargarBinEmpleados();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void cargarBinEmpleados() {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        File empleado = new File("./Empleados");
+        Empleado temp;
+        try {
+            fis = new FileInputStream(empleado);
+            ois = new ObjectInputStream(fis);
+            while ((temp = (Empleado) ois.readObject()) != null) {
+                empleados.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ois.close();
+            fis.close();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void cargarBinCarros() {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        File empleado = new File("./Carros");
+        Carro temp;
+        try {
+            fis = new FileInputStream(empleado);
+            ois = new ObjectInputStream(fis);
+            while ((temp = (Carro) ois.readObject()) != null) {
+                carros.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ois.close();
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ponerCarros() {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        File ca = new File("./Carros");
+        try {
+            fos = new FileOutputStream(ca);
+            oos = new ObjectOutputStream(fos);
+            for (Carro c : carros) {
+                oos.writeObject(c);
+            }
+            oos.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            oos.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void ponerEmpleados() {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        File ca = new File("./Carros");
+        try {
+            fos = new FileOutputStream(ca);
+            oos = new ObjectOutputStream(fos);
+            for (Empleado empleado : empleados) {
+                oos.writeObject(empleado);
+            }
+            oos.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            oos.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -77,7 +431,45 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
-
+    private ArrayList<Empleado> empleados = new ArrayList();
+    private ArrayList<Carro> carros = new ArrayList();
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField carrosRep;
+    private javax.swing.JPanel crud_carros;
+    private javax.swing.JPanel crud_empleados;
+    private javax.swing.JSpinner edadEmpleado;
+    private javax.swing.JPanel entregas;
+    private javax.swing.JTextField id;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextField nomEmpleado;
+    private javax.swing.JPanel pagos;
+    private javax.swing.JPanel reparaciones;
+    private javax.swing.JPanel simulacion;
     // End of variables declaration//GEN-END:variables
 }

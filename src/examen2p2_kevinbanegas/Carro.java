@@ -1,11 +1,14 @@
 package examen2p2_kevinbanegas;
 
-public class Carro {
+import java.io.Serializable;
+
+public class Carro implements Serializable{
     private String marca;
     private String modelo;
     private int año;
     private String estado;
     private int costo;
+    private static final long SerialVersionUID = 110L;
 
     public Carro(String marca, String modelo, int año, String estado, int costo) {
         this.marca = marca;
@@ -60,7 +63,7 @@ public class Carro {
 
     @Override
     public String toString() {
-        return "Carro{" + "marca=" + marca + ", modelo=" + modelo + ", a\u00f1o=" + año + ", estado=" + estado + ", costo=" + costo + '}';
+        return marca;
     }
     
     

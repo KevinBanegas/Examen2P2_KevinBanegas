@@ -1,11 +1,15 @@
 package examen2p2_kevinbanegas;
 
+import java.io.Serializable;
 
-public class Empleado {
+
+public class Empleado implements Serializable{
     private String nombre;
     private int edad;
     private int id;
     private int carrosRep;
+    
+    private static final long SerialVersionUID = 111L;
 
     public Empleado(String nombre, int edad, int id, int carrosRep) {
         this.nombre = nombre;
@@ -51,7 +55,7 @@ public class Empleado {
 
     @Override
     public String toString() {
-        return "Empleado{" + "nombre=" + nombre + ", edad=" + edad + ", id=" + id + ", carrosRep=" + carrosRep + '}';
+        return nombre;
     }
     
     

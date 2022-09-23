@@ -8,9 +8,13 @@ package examen2p2_kevinbanegas;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +28,10 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         cargarBinEmpleados();
+        cargarBinCarros();
+        tablaCarros();
+        cbEmpleados();
+        System.out.println(carros);
         System.out.println(empleados);
     }
 
@@ -60,10 +68,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jSpinner2 = new javax.swing.JSpinner();
+        marcaCarro = new javax.swing.JTextField();
+        modeloCarro = new javax.swing.JTextField();
+        añofab = new javax.swing.JTextField();
+        costoCarro = new javax.swing.JSpinner();
+        jButton3 = new javax.swing.JButton();
         simulacion = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jProgressBar1 = new javax.swing.JProgressBar();
@@ -126,8 +135,8 @@ public class Principal extends javax.swing.JFrame {
 
         crud_carros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel7.setText("jLabel7");
-        crud_carros.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
+        jLabel7.setText("Carros");
+        crud_carros.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, -1));
 
         jLabel8.setText("Marca");
         crud_carros.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
@@ -176,16 +185,18 @@ public class Principal extends javax.swing.JFrame {
         }
 
         crud_carros.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 570, 270));
+        crud_carros.add(marcaCarro, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 100, -1));
+        crud_carros.add(modeloCarro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 110, -1));
+        crud_carros.add(añofab, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 120, -1));
+        crud_carros.add(costoCarro, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 70, -1));
 
-        jTextField2.setText("jTextField2");
-        crud_carros.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 100, -1));
-
-        jTextField5.setText("jTextField5");
-        crud_carros.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 110, -1));
-
-        jTextField6.setText("jTextField6");
-        crud_carros.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 120, -1));
-        crud_carros.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 70, -1));
+        jButton3.setText("Crear Carro");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        crud_carros.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, -1));
 
         jTabbedPane1.addTab("Carros", crud_carros);
 
@@ -299,8 +310,10 @@ public class Principal extends javax.swing.JFrame {
 
         empleados.add(e);
 
-        ponerEmpleados();
+        System.out.println(empleados);
+        ponerEmpleados(e);
         cargarBinEmpleados();
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -308,13 +321,31 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Carro c = new Carro();
+        c.setAño(Integer.parseInt(añofab.getText()));
+        c.setCosto(Integer.parseInt(costoCarro.getValue().toString()));
+        c.setEstado("En espera de entrar a reparación");
+        c.setMarca(marcaCarro.getText());
+        c.setModelo(modeloCarro.getText());
+        
+        carros.add(c);
+        ponerCarros(c);
+        cargarBinCarros();
+        tablaCarros();
+        
+        cbEmpleados();
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     public void cargarBinEmpleados() {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
-        File empleado = new File("./Empleados");
         Empleado temp;
+        emp = new File("./empleados.kev");
         try {
-            fis = new FileInputStream(empleado);
+            fis = new FileInputStream(emp);
             ois = new ObjectInputStream(fis);
             while ((temp = (Empleado) ois.readObject()) != null) {
                 empleados.add(temp);
@@ -328,15 +359,16 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
+
     }
 
     public void cargarBinCarros() {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
-        File empleado = new File("./Carros");
         Carro temp;
+        carr = new File("./carros.kev");
         try {
-            fis = new FileInputStream(empleado);
+            fis = new FileInputStream(carr);
             ois = new ObjectInputStream(fis);
             while ((temp = (Carro) ois.readObject()) != null) {
                 carros.add(temp);
@@ -350,18 +382,40 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
-    public void ponerCarros() {
+    public void ponerCarros(Carro c) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
-        File ca = new File("./Carros");
+        carr = new File("./carros.kev");
         try {
-            fos = new FileOutputStream(ca);
+            fos = new FileOutputStream(carr);
             oos = new ObjectOutputStream(fos);
-            for (Carro c : carros) {
                 oos.writeObject(c);
-            }
+            
+            oos.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            oos.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ponerEmpleados(Empleado empleado) {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        emp = new File("./empleados.kev");
+        try {
+            fos = new FileOutputStream(emp);
+            oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(empleado);
+
             oos.flush();
         } catch (Exception e) {
             e.printStackTrace();
@@ -374,27 +428,28 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }
-
-    public void ponerEmpleados() {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
-        File ca = new File("./Carros");
-        try {
-            fos = new FileOutputStream(ca);
-            oos = new ObjectOutputStream(fos);
-            for (Empleado empleado : empleados) {
-                oos.writeObject(empleado);
-            }
-            oos.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+    
+    public void tablaCarros(){
+        DefaultTableModel tableM = (DefaultTableModel)jTable1.getModel();
+        tableM.setNumRows(0);
+        for (Carro carro : carros) {
+            Object []row = new Object[4];
+            row[0] = carro.getMarca();
+            row[1] = carro.getModelo();
+            row[2] = carro.getEstado();
+            row[3] = carro.getCosto();
+            tableM.addRow(row);
         }
-        try {
-            oos.close();
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        jTable1.setModel(tableM);
+    }
+    
+    public void cbEmpleados(){
+        DefaultComboBoxModel cbM = (DefaultComboBoxModel)jComboBox1.getModel();
+        cbM.removeAllElements();
+        for (Empleado empleado : empleados) {
+            cbM.addElement(empleado);
         }
+        jComboBox1.setModel(cbM);
     }
 
     /**
@@ -433,8 +488,12 @@ public class Principal extends javax.swing.JFrame {
     }
     private ArrayList<Empleado> empleados = new ArrayList();
     private ArrayList<Carro> carros = new ArrayList();
+    private File emp = new File("./empleados");
+    private File carr = new File("./carros.kev");
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField añofab;
     private javax.swing.JTextField carrosRep;
+    private javax.swing.JSpinner costoCarro;
     private javax.swing.JPanel crud_carros;
     private javax.swing.JPanel crud_empleados;
     private javax.swing.JSpinner edadEmpleado;
@@ -442,6 +501,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField id;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -460,13 +520,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextField marcaCarro;
+    private javax.swing.JTextField modeloCarro;
     private javax.swing.JTextField nomEmpleado;
     private javax.swing.JPanel pagos;
     private javax.swing.JPanel reparaciones;

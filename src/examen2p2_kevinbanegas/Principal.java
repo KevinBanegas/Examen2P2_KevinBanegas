@@ -37,9 +37,11 @@ public class Principal extends javax.swing.JFrame {
         cargarBinCarros();
         tablaCarros();
         cbEmpleados();
-        cbModCarros();
+        cbModCarros(carros);
         cbVerCarros();
         tablePagos();
+        tableEntregados();
+        tableEntregas();
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -48,6 +50,10 @@ public class Principal extends javax.swing.JFrame {
         jTable2.getColumnModel().getColumn(1).setPreferredWidth(30);
         jTable2.getColumnModel().getColumn(2).setPreferredWidth(120);
         jTable2.getColumnModel().getColumn(3).setPreferredWidth(30);
+        jTable3.getColumnModel().getColumn(0).setPreferredWidth(30);
+        jTable3.getColumnModel().getColumn(1).setPreferredWidth(30);
+        jTable3.getColumnModel().getColumn(2).setPreferredWidth(120);
+        jTable3.getColumnModel().getColumn(3).setPreferredWidth(30);
 
     }
 
@@ -113,7 +119,15 @@ public class Principal extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jToggleButton2 = new javax.swing.JToggleButton();
         entregas = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jToggleButton3 = new javax.swing.JToggleButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
         reparaciones = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable5 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -257,6 +271,16 @@ public class Principal extends javax.swing.JFrame {
                 jComboBox4ItemStateChanged(evt);
             }
         });
+        jComboBox4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox4MouseClicked(evt);
+            }
+        });
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Modificar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -393,6 +417,9 @@ public class Principal extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(2).setHeaderValue("Estado de Reparación");
+        }
 
         jToggleButton2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jToggleButton2.setText("Pagar Carro");
@@ -428,33 +455,121 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Pagos", pagos);
 
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Marca", "Modelo", "Estado de Reparación", "Costo"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(2).setHeaderValue("Estado de Reparación");
+        }
+
+        jToggleButton3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jToggleButton3.setText("Entregar Carro");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout entregasLayout = new javax.swing.GroupLayout(entregas);
         entregas.setLayout(entregasLayout);
         entregasLayout.setHorizontalGroup(
             entregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 735, Short.MAX_VALUE)
+            .addGroup(entregasLayout.createSequentialGroup()
+                .addGroup(entregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(entregasLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(entregasLayout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         entregasLayout.setVerticalGroup(
             entregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 513, Short.MAX_VALUE)
+            .addGroup(entregasLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Entregas", entregas);
+        jTabbedPane1.addTab("Entregas Pendientes", entregas);
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Marca", "Modelo", "Costo de Reparar"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable4);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(184, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Entregados", jPanel2);
+
+        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Empleado", "Cargo Reparar", "Exito"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable5);
 
         javax.swing.GroupLayout reparacionesLayout = new javax.swing.GroupLayout(reparaciones);
         reparaciones.setLayout(reparacionesLayout);
         reparacionesLayout.setHorizontalGroup(
             reparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 735, Short.MAX_VALUE)
+            .addGroup(reparacionesLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         reparacionesLayout.setVerticalGroup(
             reparacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 513, Short.MAX_VALUE)
+            .addGroup(reparacionesLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reparaciones", reparaciones);
 
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 540));
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 740, 540));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -504,21 +619,24 @@ public class Principal extends javax.swing.JFrame {
         c.setModelo(modeloCarro.getText());
 
         carros.add(c);
+        ArrayList<Carro> temp = new ArrayList();
+        temp.addAll(carros);
         ponerCarros();
         cargarBinCarros();
         tablaCarros();
         tablePagos();
-        cbModCarros();
+        cbModCarros(temp);
         cbVerCarros();
         System.out.println(carros);
+        tablePagos();
+        tablaCarros();
+        tableEntregas();
+        tableEntregados();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
-        marcaMod.setText(((Carro) jComboBox4.getSelectedItem()).getMarca());
-        modeloMod.setText(((Carro) jComboBox4.getSelectedItem()).getModelo());
-        añoMod.setText("" + ((Carro) jComboBox4.getSelectedItem()).getAño());
-        costoMod.setValue(((Carro) jComboBox4.getSelectedItem()).getCosto());
+
     }//GEN-LAST:event_jComboBox4ItemStateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -529,19 +647,27 @@ public class Principal extends javax.swing.JFrame {
         c.setMarca(marcaMod.getText());
         c.setModelo(modeloMod.getText());
 
-        DefaultComboBoxModel cbM = (DefaultComboBoxModel) jComboBox4.getModel();
-        cbM.removeAllElements();
-        for (Carro carro : carros) {
-            cbM.addElement(carro);
-        }
-        jComboBox4.setModel(cbM);
+        ArrayList<Carro> temp = new ArrayList();
+        temp.addAll(carros);
         ponerCarros();
         cargarBinCarros();
+        cbModCarros(temp);
+        tablePagos();
+        tablaCarros();
+        tableEntregas();
+        tableEntregados();
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        //cbModCarros();
+//        ponerCarros();
+//        ponerEmpleados();
+//        cargarBinCarros();
+//        cargarBinEmpleados();
+        tablaCarros();
+        tableEntregados();
+        tableEntregas();
+        tablePagos();
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
@@ -565,8 +691,10 @@ public class Principal extends javax.swing.JFrame {
         bitacora(c, e, exito);
         ponerCarros();
         cargarBinCarros();
-        tablaCarros();
         tablePagos();
+        tablaCarros();
+        tableEntregas();
+        tableEntregados();
         System.out.println(c.getEstado());
         Hilo h = new Hilo(costo, jProgressBar1, jLabel10, c);
         h.start();
@@ -578,12 +706,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        if(jTable2.getSelectedRow()>-1){
+        if (jTable2.getSelectedRow() > -1) {
             String marca = jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString();
             String modelo = jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString();
             String costo = jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString();
             for (Carro carro : carros) {
-                if(carro.getMarca().equals(marca) && carro.getModelo().equals(modelo) && Integer.parseInt(costo) == carro.getCosto()){
+                if (carro.getMarca().equals(marca) && carro.getModelo().equals(modelo) && Integer.parseInt(costo) == carro.getCosto()) {
                     carro.setEstado("En espera a ser entregado");
                 }
             }
@@ -593,6 +721,38 @@ public class Principal extends javax.swing.JFrame {
             tablaCarros();
         }
     }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        if (jTable3.getSelectedRow() > -1) {
+            String marca = jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString();
+            String modelo = jTable3.getValueAt(jTable3.getSelectedRow(), 1).toString();
+            String costo = jTable3.getValueAt(jTable3.getSelectedRow(), 3).toString();
+            for (Carro carro : carros) {
+                if (carro.getMarca().equals(marca) && carro.getModelo().equals(modelo) && Integer.parseInt(costo) == carro.getCosto()) {
+                    carro.setEstado("Entregado");
+                }
+            }
+            ponerCarros();
+            cargarBinCarros();
+            tablePagos();
+            tablaCarros();
+            tableEntregas();
+            tableEntregados();
+        }
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jComboBox4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox4MouseClicked
+
+    }//GEN-LAST:event_jComboBox4MouseClicked
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        if (jComboBox4.getSelectedIndex() > -1) {
+            marcaMod.setText(((Carro) jComboBox4.getSelectedItem()).getMarca());
+            modeloMod.setText(((Carro) jComboBox4.getSelectedItem()).getModelo());
+            añoMod.setText("" + ((Carro) jComboBox4.getSelectedItem()).getAño());
+            costoMod.setValue(((Carro) jComboBox4.getSelectedItem()).getCosto());
+        }
+    }//GEN-LAST:event_jComboBox4ActionPerformed
 
     public void cargarBinEmpleados() {
         FileInputStream fis = null;
@@ -704,21 +864,22 @@ public class Principal extends javax.swing.JFrame {
         jComboBox2.setModel(cbM);
     }
 
-    public void cbModCarros() {
+    public void cbModCarros(ArrayList<Carro> temp) {
         DefaultComboBoxModel cbM = (DefaultComboBoxModel) jComboBox4.getModel();
         cbM.removeAllElements();
-        for (Carro carro : carros) {
+        for (Carro carro : temp) {
             cbM.addElement(carro);
         }
         jComboBox4.setModel(cbM);
     }
-    
-    public void cbVerCarros(){
+
+    public void cbVerCarros() {
         DefaultComboBoxModel cbM = (DefaultComboBoxModel) jComboBox3.getModel();
         cbM.removeAllElements();
         for (Carro carro : carros) {
-            if(carro.getEstado().equals("En espera a ser entregado"))
-            cbM.addElement(carro);
+            if (carro.getEstado().equals("En espera de entrar a reparación")) {
+                cbM.addElement(carro);
+            }
         }
         jComboBox3.setModel(cbM);
     }
@@ -751,6 +912,37 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         jTable2.setModel(tableM);
+    }
+
+    public void tableEntregas() {
+        DefaultTableModel tableM = (DefaultTableModel) jTable3.getModel();
+        tableM.setNumRows(0);
+        for (Carro carro : carros) {
+            if ("En espera a ser entregado".equals(carro.getEstado())) {
+                Object[] row = new Object[4];
+                row[0] = carro.getMarca();
+                row[1] = carro.getModelo();
+                row[2] = carro.getEstado();
+                row[3] = carro.getCosto();
+                tableM.addRow(row);
+            }
+        }
+        jTable3.setModel(tableM);
+    }
+
+    public void tableEntregados() {
+        DefaultTableModel tableM = (DefaultTableModel) jTable4.getModel();
+        tableM.setNumRows(0);
+        for (Carro carro : carros) {
+            if ("Entregado".equals(carro.getEstado())) {
+                Object[] row = new Object[4];
+                row[0] = carro.getMarca();
+                row[1] = carro.getModelo();
+                row[2] = carro.getCosto();
+                tableM.addRow(row);
+            }
+        }
+        jTable4.setModel(tableM);
     }
 
     /**
@@ -829,15 +1021,23 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTable5;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JTextField marcaCarro;
     private javax.swing.JTextField marcaMod;
     private javax.swing.JPanel mod_carros;

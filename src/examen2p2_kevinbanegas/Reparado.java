@@ -11,6 +11,10 @@ public class Reparado {
         this.exito = exito;
     }
 
+    public Reparado() {
+    }
+    
+    
     public Empleado getE() {
         return e;
     }

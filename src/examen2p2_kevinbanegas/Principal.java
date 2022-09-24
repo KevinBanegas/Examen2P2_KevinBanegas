@@ -43,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
         tableEntregados();
         tableEntregas();
         reparaciones();
+        tableReparar();
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -663,38 +664,43 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-//        ponerCarros();
-//        ponerEmpleados();
-//        cargarBinCarros();
-//        cargarBinEmpleados();
         tablaCarros();
         tableEntregados();
         tableEntregas();
         tablePagos();
+        tableReparar();
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         Empleado e = ((Empleado) jComboBox2.getSelectedItem());
         int porcen = e.getPorcentaje();
-
+        Reparado rep = new Reparado();
         Random r = new Random(100);
         int random = 0 + r.nextInt(100);
         String exito = "";
         Carro c = (Carro) jComboBox3.getSelectedItem();
+        rep.setE(e);
         int costo = 0;
         for (Carro carro : carros) {
             if (c.equals(carro)) {
                 costo = carro.getCosto();
+                rep.setCargo(costo);
                 if (porcen < random) {
+                    rep.setExito("SI");
                     exito = "fue reparado con exito:";
                     carro.setEstado("En espera de pago de reparación");
                 } else {
+                    rep.setExito("NO");
                     exito = "no fue reparado con exito:";
                     carro.setEstado("En reparación");
                 }
             }
         }
-
+        reparado.add(rep);
+        System.out.println(reparado);
+        ponerReparar();
+        reparaciones();
+        System.out.println(reparado);
         bitacora(c, e, exito);
         ponerCarros();
         cargarBinCarros();
@@ -977,7 +983,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void tableReparar() {
-        DefaultTableModel tableM = (DefaultTableModel) jTable4.getModel();
+        DefaultTableModel tableM = (DefaultTableModel) jTable5.getModel();
         tableM.setNumRows(0);
         for (Reparado rep : reparado) {
             Object[] row = new Object[3];
@@ -985,7 +991,27 @@ public class Principal extends javax.swing.JFrame {
             row[1] = rep.getCargo();
             row[2] = rep.getExito();
         }
-        jTable4.setModel(tableM);
+        jTable5.setModel(tableM);
+    }
+
+    public void ponerReparar() {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        reparacionesFile = new File("./reparaciones.kev");
+        try {
+            fos = new FileOutputStream(reparacionesFile);
+            oos = new ObjectOutputStream(fos);
+            for (Reparado reparado1 : reparado) {
+                oos.writeObject(reparado1);
+            }
+            oos.flush();
+        } catch (Exception e) {
+        }
+        try {
+            oos.close();
+            fos.close();
+        } catch (Exception e) {
+        }
     }
 
     /**

@@ -1,9 +1,13 @@
 package examen2p2_kevinbanegas;
 
-public class Reparado {
+import java.io.Serializable;
+
+public class Reparado implements Serializable{
     private Empleado e;
     private int cargo;
     private String exito;
+    
+    private static final long SerialVersionUID=169L;
 
     public Reparado(Empleado e, int cargo, String exito) {
         this.e = e;

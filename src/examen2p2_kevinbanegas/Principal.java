@@ -597,7 +597,6 @@ public class Principal extends javax.swing.JFrame {
 
         empleados.add(e);
 
-        System.out.println(empleados);
         ponerEmpleados();
         cargarBinEmpleados();
         cbEmpleados();
@@ -630,7 +629,6 @@ public class Principal extends javax.swing.JFrame {
         tablePagos();
         cbModCarros(temp);
         cbVerCarros();
-        System.out.println(carros);
         tablePagos();
         tablaCarros();
         tableEntregas();
@@ -694,13 +692,13 @@ public class Principal extends javax.swing.JFrame {
                     exito = "no fue reparado con exito:";
                     carro.setEstado("En reparación");
                 }
+                c = carro;
             }
         }
         reparado.add(rep);
-        System.out.println(reparado);
         ponerReparar();
         reparaciones();
-        System.out.println(reparado);
+        tableReparar();
         bitacora(c, e, exito);
         ponerCarros();
         cargarBinCarros();
@@ -709,7 +707,6 @@ public class Principal extends javax.swing.JFrame {
         tablaCarros();
         tableEntregas();
         tableEntregados();
-        System.out.println(c.getEstado());
         Hilo h = new Hilo(costo, jProgressBar1, jLabel10, c);
         h.start();
         if (jProgressBar1.getValue() == costo / 1000) {
@@ -780,7 +777,6 @@ public class Principal extends javax.swing.JFrame {
             fis = new FileInputStream(emp);
             ois = new ObjectInputStream(fis);
             while ((temp = (Empleado) ois.readObject()) != null) {
-                System.out.println(temp);
                 empleados.add(temp);
             }
         } catch (Exception e) {
@@ -990,6 +986,7 @@ public class Principal extends javax.swing.JFrame {
             row[0] = rep.getE();
             row[1] = rep.getCargo();
             row[2] = rep.getExito();
+            tableM.addRow(row);
         }
         jTable5.setModel(tableM);
     }

@@ -42,6 +42,7 @@ public class Principal extends javax.swing.JFrame {
         tablePagos();
         tableEntregados();
         tableEntregas();
+        reparaciones();
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -358,15 +359,16 @@ public class Principal extends javax.swing.JFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jToggleButton1.setText("Simular");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("jLabel10");
 
         javax.swing.GroupLayout simulacionLayout = new javax.swing.GroupLayout(simulacion);
         simulacion.setLayout(simulacionLayout);
@@ -377,8 +379,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, simulacionLayout.createSequentialGroup()
                         .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(simulacionLayout.createSequentialGroup()
@@ -397,9 +399,9 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(136, Short.MAX_VALUE))
         );
 
@@ -632,6 +634,7 @@ public class Principal extends javax.swing.JFrame {
         tablaCarros();
         tableEntregas();
         tableEntregados();
+        JOptionPane.showMessageDialog(this, "Carro Creado", "Exito", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -656,7 +659,7 @@ public class Principal extends javax.swing.JFrame {
         tablaCarros();
         tableEntregas();
         tableEntregados();
-
+        JOptionPane.showMessageDialog(this, "Carro Modificado", "Exito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
@@ -671,26 +674,31 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        Carro c = carros.get(jComboBox3.getSelectedIndex());
         Empleado e = ((Empleado) jComboBox2.getSelectedItem());
-
-        int costo = c.getCosto();
         int porcen = e.getPorcentaje();
 
         Random r = new Random(100);
         int random = 0 + r.nextInt(100);
-        String exito;
-        if (porcen < random) {
-            exito = "fue reparado con exito:";
-            c.setEstado("En espera de pago de reparación");
-        } else {
-            exito = "no fue reparado con exito:";
-            c.setEstado("En reparación");
+        String exito = "";
+        Carro c = (Carro) jComboBox3.getSelectedItem();
+        int costo = 0;
+        for (Carro carro : carros) {
+            if (c.equals(carro)) {
+                costo = carro.getCosto();
+                if (porcen < random) {
+                    exito = "fue reparado con exito:";
+                    carro.setEstado("En espera de pago de reparación");
+                } else {
+                    exito = "no fue reparado con exito:";
+                    carro.setEstado("En reparación");
+                }
+            }
         }
 
         bitacora(c, e, exito);
         ponerCarros();
         cargarBinCarros();
+        cbVerCarros();
         tablePagos();
         tablaCarros();
         tableEntregas();
@@ -719,6 +727,7 @@ public class Principal extends javax.swing.JFrame {
             cargarBinCarros();
             tablePagos();
             tablaCarros();
+            JOptionPane.showMessageDialog(this, "Carro Entregado", "Exito", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
@@ -738,6 +747,7 @@ public class Principal extends javax.swing.JFrame {
             tablaCarros();
             tableEntregas();
             tableEntregados();
+            JOptionPane.showMessageDialog(this, "Carro Entregado", "Exito", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jToggleButton3ActionPerformed
 
@@ -877,7 +887,7 @@ public class Principal extends javax.swing.JFrame {
         DefaultComboBoxModel cbM = (DefaultComboBoxModel) jComboBox3.getModel();
         cbM.removeAllElements();
         for (Carro carro : carros) {
-            if (carro.getEstado().equals("En espera de entrar a reparación")) {
+            if (carro.getEstado().equals("En espera de entrar a reparación") || carro.getEstado().equals("En espera de entrar a reparación")) {
                 cbM.addElement(carro);
             }
         }
@@ -945,6 +955,39 @@ public class Principal extends javax.swing.JFrame {
         jTable4.setModel(tableM);
     }
 
+    public void reparaciones() {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        Reparado temp;
+        reparacionesFile = new File("./reparaciones.kev");
+        try {
+            reparado = new ArrayList();
+            fis = new FileInputStream(reparacionesFile);
+            ois = new ObjectInputStream(fis);
+            while ((temp = (Reparado) ois.readObject()) != null) {
+                reparado.add(temp);
+            }
+        } catch (Exception e) {
+        }
+        try {
+            ois.close();
+            fis.close();
+        } catch (Exception e) {
+        }
+    }
+
+    public void tableReparar() {
+        DefaultTableModel tableM = (DefaultTableModel) jTable4.getModel();
+        tableM.setNumRows(0);
+        for (Reparado rep : reparado) {
+            Object[] row = new Object[3];
+            row[0] = rep.getE();
+            row[1] = rep.getCargo();
+            row[2] = rep.getExito();
+        }
+        jTable4.setModel(tableM);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -981,9 +1024,11 @@ public class Principal extends javax.swing.JFrame {
     }
     private ArrayList<Empleado> empleados = new ArrayList();
     private ArrayList<Carro> carros = new ArrayList();
+    private ArrayList<Reparado> reparado = new ArrayList();
     private File emp = new File("./empleados.kev");
     private File carr = new File("./carros.kev");
     private File bitac = new File("./bitacora.txt");
+    private File reparacionesFile = new File("./reparaciones.kev");
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField añoMod;
     private javax.swing.JTextField añofab;
